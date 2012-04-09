@@ -84,6 +84,17 @@
 	        "useModules": ["datatable-scroll"],
 
             "hideTableOfContents": true
+        },
+
+        {
+            "name": "datatable-cust-formatting",
+            "displayName": "Custom Formatting / Sorting 123",
+            "modules": ["datatable"],
+            "description": "DataTable with vertical and/or horizontal scrolling rows.",
+	        "useModules": ["datatable","datatype"],
+
+            "hideTableOfContents": true
         }
+ 
     ]
 }
