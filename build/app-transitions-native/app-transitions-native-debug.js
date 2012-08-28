@@ -19,6 +19,7 @@ When this module is used, `Y.App.TransitionsNative` will automatically mix
 itself in to `Y.App`.
 
 @class App.TransitionsNative
+@extensionfor App
 @since 3.5.0
 **/
 function AppTransitionsNative() {}
@@ -222,7 +223,7 @@ AppTransitionsNative.prototype = {
         this._transitioning = true;
 
         container     = this.get('container');
-        transitioning = AppTransitions.CLASS_NAMES.transitioning;
+        transitioning = Y.App.CLASS_NAMES.transitioning;
 
         container.addClass(transitioning);
 

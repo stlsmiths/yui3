@@ -3,6 +3,7 @@
  * instance.
  *
  * @module charts
+ * @submodule charts-base
  * @class Graph
  * @constructor
  * @extends Widget
@@ -20,6 +21,7 @@ Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
         this.after("widthChange", this._sizeChangeHandler);
         this.after("heightChange", this._sizeChangeHandler);
         this.after("stylesChange", this._updateStyles);
+        this.after("groupMarkersChange", this._drawSeries);
     },
 
     /**
@@ -34,7 +36,7 @@ Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
             sc = this.get("seriesCollection"),
             series,
             i = 0,
-            len = sc.length,
+            len = sc ? sc.length : 0,
             hgl = this.get("horizontalGridlines"),
             vgl = this.get("verticalGridlines");
         if(this.get("showBackground"))
@@ -165,18 +167,9 @@ Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
             i = 0,
             series,
             seriesKey;
-        if(!this.get("seriesCollection"))
-        {
-            this._seriesCollection = [];
-        }
-        if(!this._seriesDictionary)
-        {
-            this._seriesDictionary = {};
-        }
-        if(!this.seriesTypes)
-        {
-            this.seriesTypes = [];
-        }
+        this._seriesCollection = [];
+        this._seriesDictionary = {};
+        this.seriesTypes = [];
         for(; i < len; ++i)
         {	
             series = val[i];
@@ -187,7 +180,7 @@ Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
             }
             this._addSeries(series);
         }
-        len = this.get("seriesCollection").length;
+        len = this._seriesCollection.length;
         for(i = 0; i < len; ++i)
         {
             series = this.get("seriesCollection")[i];
@@ -259,6 +252,10 @@ Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
         series.after("drawingComplete", Y.bind(this._drawingCompleteHandler, this));
         typeSeriesCollection.push(series);
         seriesCollection.push(series);
+        if(this.get("rendered"))
+        {
+            series.render();
+        }
     },
     
     /**
@@ -449,7 +446,7 @@ Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
         this._drawing = true;
         sc = this.get("seriesCollection");
         i = 0;
-        len = sc.length;
+        len = sc ? sc.length : 0;
         for(; i < len; ++i)
         {
             sc[i].draw();
@@ -529,14 +526,17 @@ Y.Graph = Y.Base.create("graph", Y.Widget, [Y.Renderer], {
         if(this._graphic)
         {
             this._graphic.destroy();
+            this._graphic = null;
         }
         if(this._background)
         {
             this._background.get("graphic").destroy();
+            this._background = null;
         }
         if(this._gridlines)
         {
             this._gridlines.get("graphic").destroy();
+            this._gridlines = null;
         }
     }
 }, {

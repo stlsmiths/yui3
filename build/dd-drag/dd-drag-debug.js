@@ -1,4 +1,4 @@
-YUI.add('dd-drag', function(Y) {
+YUI.add('dd-drag', function (Y, NAME) {
 
 
     /**
@@ -720,7 +720,9 @@ YUI.add('dd-drag', function(Y) {
         * @param {Event} e The Event
         */
         _fixDragStart: function(e) {
-            e.preventDefault();
+            if (this.validClick(e)) {
+                e.preventDefault();
+            }
         },
         /** 
         * @private
@@ -1262,4 +1264,4 @@ YUI.add('dd-drag', function(Y) {
 
 
 
-}, '@VERSION@' ,{requires:['dd-ddm-base'], skinnable:false});
+}, '@VERSION@', {"requires": ["dd-ddm-base"]});

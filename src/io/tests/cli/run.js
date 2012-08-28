@@ -5,7 +5,7 @@ process.chdir(__dirname);
 var YUITest = require('yuitest'),
     path = require('path'),
     fs = require('fs'),
-    server = require('./server'),
+    server = require('./lib/server'),
     dir = path.join(__dirname, '../../../../build-npm/'),
     YUI = require(dir).YUI,
     json;
@@ -15,6 +15,11 @@ var modules = require(path.join(__dirname, '../modules'));
 Object.keys(modules).forEach(function(name) {
     modules[name].fullpath = path.join(__dirname, '../', modules[name].fullpath);
 });
+
+modules['nodejs-tests'] = {
+    fullpath: path.join(__dirname, './lib/nodejs-tests.js'),
+    requires: [ 'test', 'querystring-parse-simple' ]
+}
 
 console.log('Starting up test server');
 server.start();

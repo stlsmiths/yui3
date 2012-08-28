@@ -9,7 +9,7 @@
 
 <h2>Setting up the Node</h2>
 <p>First we need some HTML to work with.</p>
-```
+```html
 {{>nodelist-html}}
 ```
 <h2>CSS</h2>
@@ -40,7 +40,7 @@ var handleBoxClick = function(e) {
 
     // e.currentTarget === .box-row li, just the one that was clicked
     e.currentTarget.setHTML('ouch!');        
-    e.currentTarget.setStyle('backgroundColor', '#fff');
+    e.currentTarget.setStyle('backgroundColor', '#C4DAED');
 };    
 boxes.on('click', handleBoxClick);
 

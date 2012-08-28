@@ -2,6 +2,7 @@
  * The Axis class. Generates axes for a chart.
  *
  * @module charts
+ * @submodule charts-base
  * @class Axis
  * @extends Widget
  * @uses Renderer
@@ -1435,7 +1436,7 @@ Y.Axis = Y.Base.create("axis", Y.Widget, [Y.Renderer], {
          * @type Function
          */
         appendLabelFunction: {
-            getter: function()
+            valueFn: function()
             {
                 return this._setText;
             }
@@ -1456,7 +1457,7 @@ Y.Axis = Y.Base.create("axis", Y.Widget, [Y.Renderer], {
          * @type Function
          */
         appendTitleFunction: {
-            getter: function()
+            valueFn: function()
             {
                 return this._setText;
             }

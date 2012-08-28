@@ -14,9 +14,7 @@ Scripts
 Getting your tests in the build
 -------------------------------
 
-There is a JSON file in this directory called `tests.json`, add your relative path to it and run the
-test locally. Commit and push and it will be in the next build.
-
+All `.js` files under `src/[module]/tests/cli/` will be picked up and added to each test run.
 
 Running the tests locally
 -------------------------
@@ -25,6 +23,12 @@ Clone the repo, then:
 
     cd yui3;
     ./src/common/travis/travis.sh
+
+Or you can use `yogi`
+
+    cd yui3/src;
+    yogi test //All tests with CLI and Grover
+    yogi --cli //Only CLI tests
 
 
 Ways to format your tests
@@ -152,3 +156,23 @@ YUI({useSync: true }).use('test', function(Y) {
     
 });
 ```
+
+Grover Tests
+------------
+
+After running the Node.js tests, Travis will run a subset of our main unit tests with (Grover)[http://github.com/davglass/grover].
+
+It runs this command:
+
+```
+grover -t 180 -c 5  -i src/common/node/batch.js
+```
+
+This tells Grover to run the tests with a 180 second timeout and 5 concurrent processes.
+
+It checks the env variable called `TRAVIS` and changes it's defaults.
+
+On your local machine it will run 20 concurrent tests and all of the unit tests in the system.
+
+On Travis, it runs 5 concurrent (for resourcing issues) and it removes the DD, Charts & Graphics tests from the list
+due to them taking so long to execute that it was failing some builds.
